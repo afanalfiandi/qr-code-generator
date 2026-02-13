@@ -156,7 +156,41 @@ export class App {
   }
 
   onCopy() {
+    const text = this.qrText();
 
+    if (!text) {
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'warning',
+        title: 'Nothing to copy',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return;
+    }
+
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'success',
+          title: 'Copied to clipboard',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      })
+      .catch(() => {
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'error',
+          title: 'Failed to copy',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      });
   }
 
   openScanModal() {
